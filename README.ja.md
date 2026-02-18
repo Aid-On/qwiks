@@ -6,53 +6,53 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-**Qwik x nagare Stream&lt;T&gt; integration**
+**Qwik × nagare Stream&lt;T&gt; 完全統合**
 
-Hook library that seamlessly bridges Nagare Streams to Qwik Signals
+Qwik SignalとNagare Streamをシームレスに接続する専用フックライブラリ
 
-**English** | [日本語](README.ja.md)
+[English](README.md) | **日本語**
 
 </div>
 
-## Why qwiks?
+## なぜ qwiks？
 
-### nagare Stream&lt;T&gt; → Qwik Signal
+### nagare Stream&lt;T&gt; → Qwik Signal 自動変換
 
 ```typescript
-// Use nagare Streams directly in Qwik components
+// nagare Stream を Qwik コンポーネントで直接使える
 const aiResponse = useStreamText(() =>
   unilmp.stream("Hello AI")  // Returns nagare Stream<string>
 );
 
-// Automatically converted to Qwik Signals
-return <div>{aiResponse.text}</div>  // Reactively updates
+// 自動的に Qwik Signal に変換される
+return <div>{aiResponse.text}</div>  // リアクティブに更新
 ```
 
-### Edge-Optimized
+### エッジ最適化
 
-- Full Cloudflare Workers support
-- Native WebStreams
-- Memory-efficient streaming
-- Backpressure handling
+- Cloudflare Workers 完全対応
+- WebStreams ネイティブ
+- メモリ効率的なストリーミング
+- バックプレッシャー対応
 
-### Aid-On Ecosystem Integration
+### Aid-On エコシステム統合
 
 ```typescript
-// Integrates with all Aid-On libraries
+// すべての Aid-On ライブラリと統合可能
 useStream(() => unilmp.stream(...))     // LLM streaming
 useStream(() => embersm.watch(...))     // Memory updates
 useStream(() => synapser.reports(...))  // Agent reports
 ```
 
-## Installation
+## インストール
 
 ```bash
 npm install @aid-on/qwiks
 ```
 
-## Usage
+## 基本的な使い方
 
-### useStreamText - Text Streaming
+### useStreamText - テキストストリーミング
 
 ```typescript
 import { component$ } from "@builder.io/qwik";
@@ -72,24 +72,24 @@ export default component$(() => {
       <div class="message">{chat.text}</div>
 
       <div class="status">
-        {chat.status === "streaming" && "Generating..."}
-        {chat.status === "completed" && "Done"}
-        {chat.status === "error" && `Error: ${chat.error}`}
+        {chat.status === "streaming" && "生成中..."}
+        {chat.status === "completed" && "完了"}
+        {chat.status === "error" && `エラー: ${chat.error}`}
       </div>
 
       <div class="metrics">
-        Characters: {chat.metrics.charCount}
-        Words: {chat.metrics.wordCount}
+        文字数: {chat.metrics.charCount}
+        単語数: {chat.metrics.wordCount}
       </div>
 
-      <button onClick$={chat.stop}>Stop</button>
-      <button onClick$={chat.restart}>Restart</button>
+      <button onClick$={chat.stop}>停止</button>
+      <button onClick$={chat.restart}>再開</button>
     </div>
   );
 });
 ```
 
-### useStream - Generic Streaming
+### useStream - 汎用ストリーミング
 
 ```typescript
 import { useStream } from "@aid-on/qwiks";
@@ -107,7 +107,7 @@ export default component$(() => {
 
   return (
     <div>
-      <div>Value: {dataStream.value?.value}</div>
+      <div>値: {dataStream.value?.value}</div>
       <ul>
         {dataStream.history.map((event, i) => (
           <li key={i}>
@@ -120,7 +120,7 @@ export default component$(() => {
 });
 ```
 
-### useStreamArray - Array Streaming
+### useStreamArray - 配列ストリーミング
 
 ```typescript
 import { useStreamArray } from "@aid-on/qwiks";
@@ -152,9 +152,9 @@ export default component$(() => {
   return (
     <div>
       <div class={`status ${events.status}`}>
-        {events.status === "connecting" && "Connecting..."}
-        {events.status === "streaming" && "Connected"}
-        {events.status === "error" && "Error"}
+        {events.status === "connecting" && "接続中..."}
+        {events.status === "streaming" && "接続済み"}
+        {events.status === "error" && "エラー"}
       </div>
 
       <div class="events">
@@ -167,11 +167,11 @@ export default component$(() => {
 });
 ```
 
-## API Reference
+## API リファレンス
 
 ### useStreamText
 
-Hook for text streaming.
+テキストストリーミング専用フック。
 
 ```typescript
 function useStreamText(
@@ -180,23 +180,23 @@ function useStreamText(
 ): StreamTextState
 
 interface StreamTextState {
-  text: string;                 // Accumulated text
-  chunks: string[];             // Chunk array
-  status: StreamStatus;         // Stream status
-  error: Error | null;          // Error info
-  stop: () => void;             // Stop streaming
-  restart: () => Promise<void>; // Restart streaming
+  text: string;                 // 累積テキスト
+  chunks: string[];             // チャンク配列
+  status: StreamStatus;         // ストリーム状態
+  error: Error | null;          // エラー情報
+  stop: () => void;             // 停止
+  restart: () => Promise<void>; // 再開
   metrics: {
-    charCount: number;          // Character count
-    wordCount: number;          // Word count
-    lineCount: number;          // Line count
+    charCount: number;          // 文字数
+    wordCount: number;          // 単語数
+    lineCount: number;          // 行数
   };
 }
 ```
 
 ### useStream
 
-Generic streaming hook.
+汎用ストリーミングフック。
 
 ```typescript
 function useStream<T>(
@@ -205,18 +205,18 @@ function useStream<T>(
 ): StreamState<T>
 
 interface StreamState<T> {
-  value: T | null;              // Latest value
-  history: T[];                 // Full history
-  status: StreamStatus;         // Status
-  error: Error | null;          // Error
-  stop: () => void;             // Stop
-  restart: () => Promise<void>; // Restart
+  value: T | null;              // 最新の値
+  history: T[];                 // 全履歴
+  status: StreamStatus;         // 状態
+  error: Error | null;          // エラー
+  stop: () => void;             // 停止
+  restart: () => Promise<void>; // 再開
 }
 ```
 
 ### useStreamArray
 
-Array streaming hook.
+配列ストリーミングフック。
 
 ```typescript
 function useStreamArray<T>(
@@ -225,25 +225,25 @@ function useStreamArray<T>(
 ): StreamArrayState<T>
 
 interface StreamArrayState<T> {
-  array: T[];                   // Accumulated array
-  latest: T | null;             // Latest element
-  status: StreamStatus;         // Status
-  error: Error | null;          // Error
-  stop: () => void;             // Stop
-  restart: () => Promise<void>; // Restart
-  clear: () => void;            // Clear array
+  array: T[];                   // 累積配列
+  latest: T | null;             // 最新要素
+  status: StreamStatus;         // 状態
+  error: Error | null;          // エラー
+  stop: () => void;             // 停止
+  restart: () => Promise<void>; // 再開
+  clear: () => void;            // クリア
 }
 ```
 
-## Ecosystem Integration
+## エコシステム統合
 
-qwiks integrates with all Aid-On Platform libraries:
+qwiks は Aid-On Platform の全ライブラリと統合可能：
 
-- **[@aid-on/nagare](https://github.com/Aid-On/nagare)** - Stream foundation
-- **[@aid-on/unillm](https://github.com/Aid-On/unillm)** - LLM streaming
-- **[@aid-on/embersm](https://github.com/Aid-On/embersm)** - Memory system
-- **[@aid-on/synapser](https://github.com/Aid-On/synapser)** - Agent framework
+- **[@aid-on/nagare](https://github.com/Aid-On/nagare)** - ストリーム基盤
+- **[@aid-on/unillm](https://github.com/Aid-On/unillm)** - LLM ストリーミング
+- **[@aid-on/embersm](https://github.com/Aid-On/embersm)** - メモリシステム
+- **[@aid-on/synapser](https://github.com/Aid-On/synapser)** - エージェント
 
-## License
+## ライセンス
 
 MIT
