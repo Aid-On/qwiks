@@ -1,0 +1,51 @@
+{
+  "name": "@aid-on/qwiks",
+  "version": "0.1.3",
+  "description": "Pure Qwik + Nagare Stream<T> Integration - 汎用ストリーム処理ライブラリ",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@aid-on/nagare": "^0.2.4",
+    "@builder.io/qwik": "^1.10.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "peerDependencies": {
+    "@builder.io/qwik": "^1.10.0"
+  },
+  "keywords": [
+    "qwik",
+    "nagare",
+    "streaming",
+    "reactive",
+    "edge",
+    "cloudflare-workers",
+    "sse",
+    "llm"
+  ],
+  "author": "Aid-On",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aid-On/aid-on-platform.git",
+    "directory": "packages/qwiks"
+  }
+}
