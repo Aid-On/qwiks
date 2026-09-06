@@ -47,5 +47,8 @@
     "type": "git",
     "url": "https://github.com/Aid-On/aid-on-platform.git",
     "directory": "packages/qwiks"
+  },
+  "overrides": {
+    "vite": "6.4.3"
   }
 }
