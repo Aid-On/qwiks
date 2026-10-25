@@ -22,11 +22,11 @@
   },
   "dependencies": {
     "@aid-on/nagare": "^0.2.5",
-    "@builder.io/qwik": "^1.10.2"
+    "@builder.io/qwik": "^1.10.0"
   },
   "devDependencies": {
     "typescript": "^5.7.2",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   },
   "peerDependencies": {
     "@builder.io/qwik": "^1.10.0"
